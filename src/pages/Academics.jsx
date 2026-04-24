@@ -1,101 +1,101 @@
 export default function Academics() {
-  const sections = [
-    {
-      title: "Primary Education",
-      desc: "Building strong foundations in literacy, numeracy, and basic concepts through interactive learning.",
-      icon: "📘",
-    },
-    {
-      title: "Middle School",
-      desc: "Focusing on analytical thinking, subject depth, and overall personality development.",
-      icon: "📗",
-    },
-    {
-      title: "High School",
-      desc: "Preparing students for board exams with structured curriculum and expert guidance.",
-      icon: "🎓",
-    },
-  ];
-
-  const features = [
-    "Experienced & Qualified Teachers",
-    "Smart Classrooms & Digital Learning",
-    "Activity-Based Learning",
-    "Regular Assessments & Feedback",
-    "Focus on Discipline & Values",
-    "Individual Student Attention",
-  ];
-
   return (
-    <div className="bg-gray-50">
+    <div className="bg-white">
 
-      {/* HERO */}
-      <section className="bg-blue-900 text-white py-16 text-center">
-        <h1 className="text-3xl md:text-5xl font-bold mb-3">
+      {/* 🔷 INTRO (LEFT-ALIGNED, NOT CENTERED) */}
+      <section className="max-w-5xl mx-auto px-6 py-20">
+        <h1 className="text-4xl md:text-5xl font-semibold text-blue-900 mb-6">
           Academics
         </h1>
-        <p className="text-gray-200 max-w-xl mx-auto">
-          Our academic programs are designed to nurture knowledge, skills, and values in every student.
+
+        <p className="text-gray-600 text-lg leading-relaxed max-w-2xl">
+          At EDHAA Public School, our academic framework is designed to build
+          strong foundations, encourage critical thinking, and prepare students
+          for future challenges.
         </p>
       </section>
 
-      {/* PROGRAMS */}
-      <section className="max-w-7xl mx-auto px-6 py-14">
-        <h2 className="text-2xl font-bold text-blue-900 mb-8 text-center">
-          Our Academic Programs
-        </h2>
+      {/* 🔥 ACADEMIC STRUCTURE (NOT CARDS / NOT GRID HEAVY) */}
+      <section className="max-w-5xl mx-auto px-6 pb-20 space-y-16">
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {sections.map((item, index) => (
-            <div
-              key={index}
-              className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition"
-            >
-              <div className="text-3xl mb-4">{item.icon}</div>
-              <h3 className="text-lg font-semibold text-blue-900 mb-2">
-                {item.title}
-              </h3>
-              <p className="text-gray-600 text-sm">
-                {item.desc}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* FEATURES */}
-      <section className="bg-white py-14">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-2xl font-bold text-blue-900 mb-8 text-center">
-            Why Choose Our Academics
+        {/* PRIMARY */}
+        <div>
+          <h2 className="text-2xl font-medium text-blue-900 mb-3">
+            Primary Education
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-4">
-            {features.map((item, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-3 bg-gray-50 p-4 rounded-lg"
-              >
-                <span className="text-yellow-500 text-lg">✔</span>
-                <p className="text-gray-700 text-sm">{item}</p>
-              </div>
-            ))}
-          </div>
+          <p className="text-gray-600 leading-relaxed">
+            Focuses on building core literacy, numeracy, and communication skills
+            through engaging and interactive learning methods.
+          </p>
         </div>
+
+        {/* MIDDLE */}
+        <div>
+          <h2 className="text-2xl font-medium text-blue-900 mb-3">
+            Middle School
+          </h2>
+
+          <p className="text-gray-600 leading-relaxed">
+            Emphasizes conceptual understanding, analytical thinking, and subject
+            depth to strengthen academic foundations.
+          </p>
+        </div>
+
+        {/* HIGH SCHOOL */}
+        <div>
+          <h2 className="text-2xl font-medium text-blue-900 mb-3">
+            High School
+          </h2>
+
+          <p className="text-gray-600 leading-relaxed">
+            Prepares students for board examinations with structured curriculum,
+            consistent evaluation, and expert guidance.
+          </p>
+        </div>
+
       </section>
 
-      {/* CTA */}
-      <section className="bg-blue-900 text-white py-14 text-center">
-        <h2 className="text-2xl font-bold mb-3">
-          Ready to Join Our School?
-        </h2>
-        <p className="text-gray-200 mb-6">
-          Give your child the best education and future.
-        </p>
+      {/* 🔥 IMAGE BREAK (ONLY ONE, PURPOSEFUL) */}
+      <section className="max-w-6xl mx-auto px-6 pb-20">
+        <img
+          src="https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=1200"
+          alt="Classroom"
+          className="w-full h-[350px] object-cover"
+        />
+      </section>
 
-        <button className="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-3 rounded-md font-medium transition">
-          Contact Us
-        </button>
+      {/* 🔥 APPROACH SECTION (DIFFERENT STRUCTURE) */}
+      <section className="max-w-5xl mx-auto px-6 pb-24">
+
+        <h2 className="text-2xl font-medium text-blue-900 mb-6">
+          Our Learning Approach
+        </h2>
+
+        <div className="grid md:grid-cols-2 gap-8 text-gray-600">
+
+          <p>
+            Experienced faculty guide students with a focus on clarity,
+            discipline, and consistent progress.
+          </p>
+
+          <p>
+            Technology-enabled classrooms enhance understanding and make
+            learning more interactive.
+          </p>
+
+          <p>
+            Regular assessments help track performance and provide timely
+            feedback for improvement.
+          </p>
+
+          <p>
+            Equal importance is given to values, behavior, and overall
+            development.
+          </p>
+
+        </div>
+
       </section>
 
     </div>
