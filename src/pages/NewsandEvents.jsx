@@ -1,26 +1,41 @@
+
+
+
+
+
+
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import axios from "axios";
+import { AppContext } from "../context/Appcontext";
 
 export default function NewsAndEvents() {
   const navigate = useNavigate();
+  const { backendURL } = useContext(AppContext);
 
-  const featured = {
-    title: "Annual Day Celebration 2026",
-    desc: "A grand event showcasing talents in dance, music, and drama with participation from all grades.",
-    image:
-      "https://images.unsplash.com/photo-1519455953755-af066f52f1a6?q=80&w=1200",
+  const [newsData, setNewsData] = useState([]);
+
+  // 🔥 FETCH NEWS
+  const fetchNews = async () => {
+    try {
+      const res = await axios.get(`${backendURL}/get`);
+
+      const data = Array.isArray(res.data)
+        ? res.data
+        : res.data.news || [];
+
+      setNewsData(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const news = [
-    { title: "Science Exhibition — Innovative student projects", date: "Feb 2026" },
-    { title: "Sports Day — Athletic excellence and teamwork", date: "Jan 2026" },
-    { title: "Arts Festival — Creativity and expression", date: "Dec 2025" },
-  ];
+  useEffect(() => {
+    fetchNews();
+  }, []);
 
-  const events = [
-    { date: "10 Apr", title: "Parent Meeting" },
-    { date: "05 May", title: "Cultural Fest" },
-    { date: "01 Jun", title: "School Reopening" },
-  ];
+  // 🔥 FEATURED (first item)
+  const featured = newsData[0];
 
   return (
     <div className="bg-white">
@@ -37,80 +52,74 @@ export default function NewsAndEvents() {
       </section>
 
       {/* 🔥 FEATURED */}
-      <section className="max-w-6xl mx-auto px-6 pb-20 grid md:grid-cols-2 gap-10 items-center">
+      {featured && (
+        <section className="max-w-6xl mx-auto px-6 pb-20 grid md:grid-cols-2 gap-10 items-center">
 
-        <img
-          src={featured.image}
-          alt=""
-          className="w-full h-[300px] md:h-[350px] object-cover"
-        />
+          <img
+            src={featured.image}
+            alt=""
+            className="w-full h-[300px] md:h-[350px] object-cover"
+          />
 
-        <div>
-          <p className="text-sm text-gray-400 mb-2">Featured</p>
+          <div>
+            <p className="text-sm text-gray-400 mb-2">Featured</p>
 
-          <h2 className="text-2xl font-medium text-blue-900 mb-3">
-            {featured.title}
-          </h2>
+            <h2 className="text-2xl font-medium text-blue-900 mb-3">
+              {featured.title}
+            </h2>
 
-          <p className="text-gray-600 mb-4">
-            {featured.desc}
-          </p>
+            <p className="text-gray-600 mb-4">
+              {featured.description}
+            </p>
+          </div>
 
-          <button className="text-blue-900 font-medium hover:underline">
-            Read more →
-          </button>
-        </div>
+        </section>
+      )}
 
-      </section>
+      {/* 🔥 LIST */}
+      <section className="max-w-6xl mx-auto px-6 pb-20">
 
-      {/* 🔥 CONTENT SPLIT (NO TEMPLATE GRID FEEL) */}
-      <section className="max-w-6xl mx-auto px-6 pb-20 grid md:grid-cols-2 gap-16">
+        <h3 className="text-lg font-medium text-blue-900 mb-6">
+          Latest Updates
+        </h3>
 
-        {/* LEFT: NEWS */}
-        <div>
-          <h3 className="text-lg font-medium text-blue-900 mb-6">
-            Latest Updates
-          </h3>
+        {newsData.length === 0 ? (
+          <p className="text-gray-400">No news available</p>
+        ) : (
+          <div className="space-y-6">
 
-          <div className="space-y-5">
-            {news.map((item, i) => (
-              <div key={i} className="border-b pb-4 flex justify-between">
+            {newsData.map((item) => (
+              <div
+                key={item._id}
+                className="flex gap-6 border-b pb-5 items-center"
+              >
 
-                <p className="text-gray-800">{item.title}</p>
+                {item.image && (
+                  <img
+                    src={item.image}
+                    className="w-24 h-20 object-cover rounded"
+                  />
+                )}
 
-                <span className="text-sm text-gray-400">
-                  {item.date}
-                </span>
+                <div>
+                  <p className="text-gray-800 font-medium">
+                    {item.title}
+                  </p>
+
+                  <p className="text-sm text-gray-500 mt-1">
+                    {item.description}
+                  </p>
+                </div>
 
               </div>
             ))}
+
           </div>
-        </div>
-
-        {/* RIGHT: EVENTS */}
-        <div>
-          <h3 className="text-lg font-medium text-blue-900 mb-6">
-            Upcoming Events
-          </h3>
-
-          <div className="space-y-4">
-            {events.map((event, i) => (
-              <div key={i} className="flex justify-between border-b pb-3">
-
-                <span className="text-gray-700">{event.title}</span>
-
-                <span className="text-gray-400 text-sm">
-                  {event.date}
-                </span>
-
-              </div>
-            ))}
-          </div>
-        </div>
+        )}
 
       </section>
 
-      {/* 🔥 CTA (SIMPLE, NOT HEAVY) */}
+      {/* CTA */}
       <section className="max-w-4xl mx-auto px-6 pb-24 text-center">
 
         <p className="text-gray-600 mb-6">

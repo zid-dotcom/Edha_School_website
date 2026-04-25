@@ -34,7 +34,7 @@ export default function Testimonial() {
           <div className="w-14 h-[2px] bg-yellow-500 mx-auto mt-4"></div>
         </div>
 
-        {/* 🔥 MAIN FEATURED QUOTE */}
+        {/*  MAIN FEATURED QUOTE */}
         <div className="text-center max-w-3xl mx-auto mb-20">
           <p className="text-2xl md:text-3xl text-gray-800 leading-relaxed font-medium">
             “{testimonials[0].text}”
@@ -50,7 +50,7 @@ export default function Testimonial() {
           </div>
         </div>
 
-        {/* 🔥 SECONDARY TESTIMONIALS (MINIMAL GRID) */}
+        {/*  SECONDARY TESTIMONIALS (MINIMAL GRID) */}
         <div className="grid md:grid-cols-2 gap-10">
           {testimonials.slice(1).map((t, i) => (
             <div key={i}>

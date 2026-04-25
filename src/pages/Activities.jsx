@@ -46,7 +46,7 @@ export default function Activities() {
         </p>
       </section>
 
-      {/* 🔥 FEATURED ACTIVITY (BIG SECTION) */}
+      {/*  FEATURED ACTIVITY (BIG SECTION) */}
       <section className="max-w-6xl mx-auto px-6 pb-20">
         <div className="grid md:grid-cols-2 gap-10 items-center">
 
@@ -73,7 +73,7 @@ export default function Activities() {
         </div>
       </section>
 
-      {/* 🔥 OTHER ACTIVITIES (ZIG-ZAG STYLE) */}
+      {/*  OTHER ACTIVITIES (ZIG-ZAG STYLE) */}
       <section className="max-w-6xl mx-auto px-6 space-y-16 pb-20">
         {activities.slice(1).map((item, i) => (
           <div
@@ -103,7 +103,7 @@ export default function Activities() {
         ))}
       </section>
 
-      {/* ✨ QUOTE (MINIMAL STYLE) */}
+      {/*  QUOTE (MINIMAL STYLE) */}
       <section className="bg-gray-50 py-20 text-center px-6">
         <p className="max-w-2xl mx-auto text-xl text-gray-700 italic leading-relaxed">
           “Education is not just about books. It’s about experiences, creativity, and growth.”

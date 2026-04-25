@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
+
+
+
 export default function Facilities() {
   const navigate = useNavigate();
 
@@ -30,10 +33,11 @@ export default function Facilities() {
     },
   ];
 
+
   return (
     <div className="bg-white">
 
-      {/* 🔷 HEADER */}
+      {/*  HEADER */}
       <section className="max-w-5xl mx-auto px-6 py-20">
         <h1 className="text-4xl md:text-5xl font-semibold text-blue-900 mb-6">
           Facilities
@@ -45,7 +49,7 @@ export default function Facilities() {
         </p>
       </section>
 
-      {/* 🔥 MAIN IMAGE */}
+      {/*  MAIN IMAGE */}
       <section className="max-w-6xl mx-auto px-6 pb-20">
         <img
           src="https://images.unsplash.com/photo-1596495578065-6e0763fa1178?q=80&w=1200"
@@ -54,7 +58,7 @@ export default function Facilities() {
         />
       </section>
 
-      {/* 🔥 FACILITIES LIST (NO GRID, NO CARDS) */}
+      {/*  FACILITIES LIST (NO GRID, NO CARDS) */}
       <section className="max-w-5xl mx-auto px-6 pb-24 space-y-10">
         {facilities.map((item, i) => (
           <div key={i} className="border-b pb-5">
@@ -71,7 +75,7 @@ export default function Facilities() {
         ))}
       </section>
 
-      {/* 🔥 SECOND IMAGE (OPTIONAL, SIMPLE) */}
+      {/*  SECOND IMAGE (OPTIONAL, SIMPLE) */}
       <section className="max-w-6xl mx-auto px-6 pb-24">
         <img
           src="https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=1200"
@@ -80,7 +84,7 @@ export default function Facilities() {
         />
       </section>
 
-      {/* 🔥 CTA */}
+      {/*  CTA */}
       <section className="max-w-4xl mx-auto px-6 pb-24 text-center">
         <p className="text-gray-600 mb-6">
           Visit our campus to experience the facilities firsthand.
@@ -97,3 +101,133 @@ export default function Facilities() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
