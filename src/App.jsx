@@ -56,7 +56,7 @@
 
 
 import React, { useContext } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -77,28 +77,28 @@ import { AppContext } from "./context/Appcontext";
 
 const App = () => {
   const { atoken } = useContext(AppContext);
+  const location = useLocation();
+
+  // Check if current path is an admin route
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
   return (
     <div>
       <ToastContainer />
 
-      {/* 🔥 Show Header only for public */}
-      {!atoken && <Header />}
+      {/* 🔥 Show Header only on public routes */}
+      {!isAdminRoute && <Header />}
 
       <Routes>
 
         {/* PUBLIC ROUTES */}
-        {!atoken && (
-          <>
-            <Route path="/" element={<Home />} />
-            <Route path="/Academics" element={<Academics />} />
-            <Route path="/Activities" element={<Activities />} />
-            <Route path="/Facilities" element={<Facilities />} />
-            <Route path="/AboutUs" element={<AboutUs />} />
-            <Route path="/NewsAndEvenets" element={<NewsandEvents />} />
-            <Route path="/Contact" element={<Contact />} />
-          </>
-        )}
+        <Route path="/" element={<Home />} />
+        <Route path="/Academics" element={<Academics />} />
+        <Route path="/Activities" element={<Activities />} />
+        <Route path="/Facilities" element={<Facilities />} />
+        <Route path="/AboutUs" element={<AboutUs />} />
+        <Route path="/NewsAndEvenets" element={<NewsandEvents />} />
+        <Route path="/Contact" element={<Contact />} />
 
         {/* ADMIN LOGIN */}
         <Route
@@ -121,8 +121,8 @@ const App = () => {
 
       </Routes>
 
-      {/* 🔥 Hide footer in admin */}
-      {!atoken && <Footer />}
+      {/* 🔥 Hide footer on admin routes */}
+      {!isAdminRoute && <Footer />}
     </div>
   );
 };
