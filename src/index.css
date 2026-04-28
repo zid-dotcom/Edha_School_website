@@ -1,49 +1,68 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
 @theme {
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-200: #bfdbfe;
-  --color-primary-300: #93c5fd;
-  --color-primary-400: #60a5fa;
-  --color-primary-500: #3b82f6;
-  --color-primary-600: #2563eb;
-  --color-primary-700: #1d4ed8;
-  --color-primary-800: #1e40af;
-  --color-primary-900: #1e3a8a;
-  --color-primary-950: #172554;
+  --color-primary-50: #eef2f6;
+  --color-primary-100: #d5e1ec;
+  --color-primary-200: #b0c9df;
+  --color-primary-300: #8bb0d2;
+  --color-primary-400: #6698c5;
+  --color-primary-500: #427fb8;
+  --color-primary-600: #1b4d90; /* Edhaa Blue */
+  --color-primary-700: #163d73;
+  --color-primary-800: #112e56;
+  --color-primary-900: #0b1f3a;
 
-  --color-neutral-50: #f8fafc;
-  --color-neutral-100: #f1f5f9;
-  --color-neutral-200: #e2e8f0;
-  --color-neutral-300: #cbd5e1;
-  --color-neutral-400: #94a3b8;
-  --color-neutral-500: #64748b;
-  --color-neutral-600: #475569;
-  --color-neutral-700: #334155;
-  --color-neutral-800: #1e293b;
-  --color-neutral-900: #0f172a;
-  --color-neutral-950: #020617;
+  --color-accent-500: #427fb8; /* Replaced Saffron with a secondary Blue */
+  --color-accent-600: #29609b;
 
-  --font-sans: 'Inter', sans-serif;
-  --font-heading: 'Outfit', sans-serif;
+  --color-neutral-50: #f4f4f4;
+  --color-neutral-100: #e0e0e0;
+  --color-neutral-200: #cccccc;
+  --color-neutral-300: #b8b8b8;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #8f8f8f;
+  --color-neutral-600: #7a7a7a;
+  --color-neutral-700: #666666;
+  --color-neutral-800: #525252;
+  --color-neutral-900: #3d3d3d;
+
+  --font-sans: 'Roboto', sans-serif;
 }
 
 @layer base {
+  html { scroll-behavior: smooth; }
+
   body {
-    @apply font-sans bg-neutral-50 text-neutral-800 antialiased selection:bg-primary-200 selection:text-primary-900;
+    @apply font-sans bg-neutral-50 text-neutral-800 antialiased selection:bg-primary-100 selection:text-primary-900;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading text-neutral-900 tracking-tight;
+    @apply font-sans font-bold text-neutral-900;
   }
 }
 
 @layer utilities {
-  .glass-card {
-    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-sm;
+  .marquee-container {
+    overflow: hidden;
+    white-space: nowrap;
   }
-  .section-padding {
-    @apply py-20 px-6 md:px-12 lg:px-24;
+  .marquee-content {
+    display: inline-block;
+    animation: marquee 20s linear infinite;
+  }
+  .marquee-container:hover .marquee-content {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  .kvs-card {
+    @apply bg-white border border-neutral-200 shadow-sm overflow-hidden;
+  }
+  .kvs-card-header {
+    @apply bg-primary-600 text-white px-4 py-2 font-bold uppercase text-sm flex items-center justify-between border-b-2 border-accent-500;
   }
 }

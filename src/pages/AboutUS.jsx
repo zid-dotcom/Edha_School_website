@@ -1,138 +1,175 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
 import { Target, Lightbulb, Shield, Award, Users } from "lucide-react";
+import { Link } from "react-router-dom";
+import schoolImage from "../assets/SchoolImage.jpg";
 
 export default function AboutUs() {
+  const [activeTab, setActiveTab] = useState("overview");
+
   const values = [
-    { icon: <Award className="w-5 h-5" />, label: "Excellence" },
-    { icon: <Shield className="w-5 h-5" />, label: "Integrity" },
-    { icon: <Target className="w-5 h-5" />, label: "Discipline" },
-    { icon: <Users className="w-5 h-5" />, label: "Respect" },
-    { icon: <Lightbulb className="w-5 h-5" />, label: "Innovation" },
+    { icon: <Award className="w-5 h-5 text-primary-600" />, label: "Excellence" },
+    { icon: <Shield className="w-5 h-5 text-primary-600" />, label: "Integrity" },
+    { icon: <Target className="w-5 h-5 text-primary-600" />, label: "Discipline" },
+    { icon: <Users className="w-5 h-5 text-primary-600" />, label: "Respect" },
+    { icon: <Lightbulb className="w-5 h-5 text-primary-600" />, label: "Innovation" },
+  ];
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "overview":
+        return (
+          <div className="bg-white border border-neutral-200 shadow-sm">
+              <div className="bg-neutral-100 text-primary-800 px-4 py-3 font-bold uppercase text-sm border-b border-neutral-300">
+                  School History & Overview
+              </div>
+              <div className="p-6">
+                  <img src={schoolImage} alt="Edhaa Public School Campus" className="w-full h-64 object-cover mb-6 border border-neutral-300" />
+                  <p className="text-sm text-neutral-700 leading-relaxed text-justify mb-4">
+                      Edhaa Public School, established with the goal of providing high-quality, inclusive education, is a recognized institution affiliated to the Council for the Indian School Certificate Examinations (ICSE). Located in the IT corridor of Whitefield, Bengaluru, our institution has grown to become a center of academic and co-curricular excellence in the region.
+                  </p>
+                  <p className="text-sm text-neutral-700 leading-relaxed text-justify mb-4">
+                      We are committed to providing an education that nurtures knowledge, discipline, and strong ethical values. Our dedicated staff works tirelessly to maintain a safe, stimulating, and disciplined learning environment inside the school campus. At Edhaa Public School, every student is encouraged to explore their potential and prepare themselves to be responsible citizens of tomorrow.
+                  </p>
+              </div>
+          </div>
+        );
+      
+      case "vision":
+        return (
+          <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-white border border-neutral-200 shadow-sm flex flex-col">
+                  <div className="bg-neutral-100 text-primary-800 px-4 py-3 font-bold uppercase text-sm border-b border-neutral-300">
+                      Our Vision
+                  </div>
+                  <div className="p-6 flex-1">
+                      <p className="text-sm text-neutral-700 leading-relaxed text-justify">
+                          Our vision is to impart quality and inclusive education for the all-round development of a child—encompassing physical, mental, and emotional growth. We aim to empower every student with the intellectual curiosity and moral framework necessary to serve the society and nation effectively.
+                      </p>
+                  </div>
+              </div>
+
+              <div className="bg-white border border-neutral-200 shadow-sm flex flex-col">
+                  <div className="bg-neutral-100 text-primary-800 px-4 py-3 font-bold uppercase text-sm border-b border-neutral-300">
+                      Our Mission
+                  </div>
+                  <div className="p-6 flex-1">
+                      <ul className="list-disc pl-5 text-sm text-neutral-700 leading-relaxed flex flex-col gap-2">
+                          <li>To pursue academic excellence and set high standards in school education.</li>
+                          <li>To initiate and promote innovation in teaching methodologies.</li>
+                          <li>To develop strong character, instilling values of integrity, empathy, and resilience in every student.</li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+        );
+
+      case "management":
+        return (
+          <div className="bg-white border border-neutral-200 shadow-sm">
+              <div className="bg-neutral-100 text-primary-800 px-4 py-3 font-bold uppercase text-sm border-b border-neutral-300">
+                  School Management
+              </div>
+              <div className="p-0 flex flex-col">
+                  <div className="grid md:grid-cols-2 border-b border-neutral-200">
+                      <div className="p-6 border-b md:border-b-0 md:border-r border-neutral-200 flex items-start gap-4 hover:bg-neutral-50 transition-colors">
+                          <div className="w-16 h-16 bg-neutral-100 border border-neutral-300 p-1 shrink-0">
+                              <img src="https://ui-avatars.com/api/?name=Mahalakshmi+N+Reddy&background=1b4d90&color=fff" alt="Secretary" className="w-full h-full object-cover" />
+                          </div>
+                          <div>
+                              <h3 className="font-bold text-primary-800 text-base">Smt. Mahalakshmi N Reddy</h3>
+                              <p className="text-xs font-bold text-neutral-500 mb-2 uppercase tracking-wide">Secretary</p>
+                              <p className="text-xs text-neutral-700 leading-relaxed text-justify">Providing strong leadership and a steadfast vision for the continuous infrastructural and academic growth of the institution.</p>
+                          </div>
+                      </div>
+                      <div className="p-6 flex items-start gap-4 hover:bg-neutral-50 transition-colors">
+                          <div className="w-16 h-16 bg-neutral-100 border border-neutral-300 p-1 shrink-0">
+                              <img src="https://ui-avatars.com/api/?name=Thrilok+S&background=1b4d90&color=fff" alt="Director" className="w-full h-full object-cover" />
+                          </div>
+                          <div>
+                              <h3 className="font-bold text-primary-800 text-base">Shri. Thrilok S</h3>
+                              <p className="text-xs font-bold text-neutral-500 mb-2 uppercase tracking-wide">Director</p>
+                              <p className="text-xs text-neutral-700 leading-relaxed text-justify">Overseeing academic excellence and ensuring high-quality education standards are strictly maintained across all departments.</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        );
+
+      case "values":
+        return (
+          <div className="bg-white border border-neutral-200 shadow-sm mb-10">
+              <div className="bg-neutral-100 text-primary-800 px-4 py-3 font-bold uppercase text-sm border-b border-neutral-300">
+                  Core Values
+              </div>
+              <div className="p-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                  {values.map((v, i) => (
+                      <div key={i} className="flex flex-col items-center justify-center p-4 border border-neutral-200 bg-neutral-50 text-center">
+                          <div className="mb-2 bg-white p-2 rounded-full border border-neutral-200 shadow-sm">{v.icon}</div>
+                          <span className="text-sm font-bold text-primary-800">{v.label}</span>
+                      </div>
+                  ))}
+              </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  const menuItems = [
+    { id: "overview", label: "History & Overview" },
+    { id: "vision", label: "Vision & Mission" },
+    { id: "values", label: "Core Values" },
+    { id: "management", label: "School Management" },
   ];
 
   return (
-    <div className="bg-white pt-20">
-      {/* HEADER SECTION */}
-      <section className="relative overflow-hidden bg-neutral-900 text-white py-24 lg:py-32">
-        <div className="absolute inset-0 z-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-primary-400 via-neutral-900 to-neutral-900"></div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
-              Shaping minds, <br/> <span className="text-primary-400">building futures.</span>
-            </h1>
-            <p className="text-xl text-neutral-300 leading-relaxed">
-              EDHAA Public School is committed to providing quality education that nurtures knowledge, discipline, and values. We shape young minds to become responsible citizens and future leaders.
-            </p>
-          </div>
+    <div className="bg-neutral-50 font-sans pb-10 min-h-screen">
+      
+      {/* Page Header */}
+      <div className="bg-primary-700 py-6 px-4 border-b border-primary-800">
+        <div className="max-w-6xl mx-auto">
+            <h1 className="text-2xl font-bold text-white uppercase tracking-wider">About Us</h1>
+            <p className="text-primary-200 text-sm mt-1 font-medium">Home / About Us</p>
         </div>
-      </section>
+      </div>
 
-      {/* MISSION & VISION */}
-      <section className="section-padding">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 lg:gap-20">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="group"
-          >
-            <div className="w-16 h-16 rounded-2xl bg-primary-50 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
-              <Target className="w-8 h-8 text-primary-600" />
+      <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 md:grid-cols-12 gap-6 px-4 xl:px-0">
+          
+        {/* Left Sidebar Menu */}
+        <div className="md:col-span-3 flex flex-col gap-6">
+            <div className="bg-white border border-neutral-200 shadow-sm">
+                <div className="bg-primary-600 text-white px-4 py-3 font-bold uppercase text-sm border-b-2 border-primary-800">
+                    Menu
+                </div>
+                <div className="flex flex-col text-sm font-bold text-primary-800">
+                    {menuItems.map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => setActiveTab(item.id)}
+                        className={`p-3 text-left border-b border-neutral-200 transition-colors ${
+                          activeTab === item.id 
+                            ? "bg-neutral-50 border-l-4 border-primary-600" 
+                            : "hover:bg-neutral-50 border-l-4 border-transparent"
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                    <Link to="/Contact" className="p-3 text-left hover:bg-neutral-50 transition-colors border-l-4 border-transparent text-primary-600">
+                      Contact Us »
+                    </Link>
+                </div>
             </div>
-            <h2 className="text-3xl font-bold text-neutral-900 mb-4">Our Mission</h2>
-            <p className="text-lg text-neutral-600 leading-relaxed">
-              To provide a nurturing environment where students can excel academically, develop strong values, and become confident individuals prepared for the challenges of tomorrow.
-            </p>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="group"
-          >
-            <div className="w-16 h-16 rounded-2xl bg-primary-50 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
-              <Lightbulb className="w-8 h-8 text-primary-600" />
-            </div>
-            <h2 className="text-3xl font-bold text-neutral-900 mb-4">Our Vision</h2>
-            <p className="text-lg text-neutral-600 leading-relaxed">
-              To be a leading institution that inspires innovation, leadership, and lifelong learning in every student, establishing a benchmark for educational excellence globally.
-            </p>
-          </motion.div>
         </div>
-      </section>
 
-      {/* IMAGE BREAK */}
-      <section className="max-w-7xl mx-auto px-6 mb-24">
-        <div className="w-full h-[400px] md:h-[600px] rounded-3xl overflow-hidden relative">
-          <img
-            src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=2000"
-            alt="School Campus"
-            className="w-full h-full object-cover"
-          />
+        {/* Main Content Area */}
+        <div className="md:col-span-9 flex flex-col gap-6">
+            {renderContent()}
         </div>
-      </section>
-
-      {/* LEADERSHIP */}
-      <section className="section-padding bg-neutral-50 border-t border-neutral-100">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Leadership</h2>
-            <p className="text-neutral-600 max-w-2xl mx-auto">Guiding our institution with vision, dedication, and a commitment to excellence.</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Secretary */}
-            <motion.div 
-              whileHover={{ y: -5 }}
-              className="bg-white p-8 rounded-3xl shadow-sm border border-neutral-200"
-            >
-              <div className="w-16 h-16 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xl font-bold mb-6">
-                M
-              </div>
-              <h3 className="text-xl font-bold text-neutral-900 mb-1">Mahalakshmi N Reddy</h3>
-              <p className="text-primary-600 font-medium mb-4">Secretary</p>
-              <p className="text-neutral-600 leading-relaxed">
-                Providing strong leadership and vision for the continuous growth and development of the institution.
-              </p>
-            </motion.div>
-
-            {/* Director */}
-            <motion.div 
-              whileHover={{ y: -5 }}
-              className="bg-white p-8 rounded-3xl shadow-sm border border-neutral-200"
-            >
-              <div className="w-16 h-16 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xl font-bold mb-6">
-                T
-              </div>
-              <h3 className="text-xl font-bold text-neutral-900 mb-1">Thrilok S</h3>
-              <p className="text-primary-600 font-medium mb-4">Director</p>
-              <p className="text-neutral-600 leading-relaxed">
-                Leading academic excellence and ensuring high-quality education standards across all departments.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* VALUES */}
-      <section className="section-padding">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-neutral-900 mb-12">Our Core Values</h2>
-          <div className="flex flex-wrap justify-center gap-4">
-            {values.map((value, idx) => (
-              <div 
-                key={idx}
-                className="flex items-center gap-2 px-6 py-3 bg-white border border-neutral-200 rounded-full shadow-sm text-neutral-700 font-medium"
-              >
-                <span className="text-primary-600">{value.icon}</span>
-                {value.label}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
   );
 }

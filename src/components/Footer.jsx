@@ -21,7 +21,7 @@ export default function Footer() {
 
         {/* RIGHT */}
         <p className="text-neutral-500 text-center md:text-right font-medium">
-          Kozhikode, Kerala
+          Whitefield, Bengaluru
         </p>
 
       </div>

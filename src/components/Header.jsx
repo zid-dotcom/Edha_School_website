@@ -1,134 +1,93 @@
-import { useState, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import { Menu, X, ChevronRight } from "lucide-react";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { Menu, X, Accessibility } from "lucide-react";
 import edhaaIcon from "../assets/EDHAAICON.jpeg";
-
-const navLinks = [
-  { label: "Home", to: "/" },
-  { label: "Academics", to: "/Academics" },
-  { label: "Activities", to: "/Activities" },
-  { label: "Facilities", to: "/Facilities" },
-  { label: "News & Events", to: "/NewsAndEvenets" },
-  { label: "About Us", to: "/AboutUs" },
-  { label: "Contact", to: "/Contact" },
-];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
-
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [location.pathname]);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const desktopLinkClass = ({ isActive }) =>
-    `relative text-sm font-medium transition-colors ${
-      isActive
-        ? "text-primary-900"
-        : "text-neutral-500 hover:text-primary-600"
-    }`;
 
   return (
-    <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? "bg-white/80 backdrop-blur-md border-b border-neutral-200/50 shadow-sm" : "bg-transparent"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* LOGO */}
-            <NavLink to="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center p-1 shadow-sm border border-neutral-200 group-hover:scale-105 transition-transform duration-300">
-                <img
-                  src={edhaaIcon}
-                  alt="EDHAA Logo"
-                  className="w-full h-full object-contain rounded-lg"
-                  draggable={false}
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                  }}
-                />
-              </div>
-              <div className="hidden sm:flex flex-col">
-                <span className="text-base font-semibold text-neutral-900 tracking-tight leading-tight group-hover:text-primary-600 transition-colors">
-                  EDHAA PUBLIC SCHOOL
-                </span>
-              </div>
-            </NavLink>
-
-            {/* DESKTOP NAV */}
-            <nav className="hidden lg:flex items-center gap-8">
-              {navLinks.map(({ label, to }) => (
-                <NavLink key={label} to={to} className={desktopLinkClass}>
-                  {label}
-                </NavLink>
-              ))}
-            </nav>
-
-            {/* ADMIN BUTTON */}
-            <div className="hidden lg:flex items-center gap-4">
-              <NavLink
-                to="/adminlogin"
-                className="flex items-center gap-2 bg-neutral-900 text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-neutral-800 transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
-              >
-                Admin Login
-                <ChevronRight className="w-4 h-4" />
-              </NavLink>
-            </div>
-
-            {/* MOBILE MENU BUTTON */}
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="lg:hidden p-2 text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors"
-            >
-              {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* MOBILE MENU */}
-        <div
-          className={`lg:hidden absolute top-full left-0 w-full bg-white border-b border-neutral-200 shadow-lg overflow-hidden transition-all duration-300 ${
-            menuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-          }`}
-        >
-          <div className="flex flex-col p-6 gap-4">
-            {navLinks.map(({ label, to }) => (
-              <NavLink
-                key={label}
-                to={to}
-                className={({ isActive }) =>
-                  `text-base font-medium py-2 ${
-                    isActive ? "text-primary-600" : "text-neutral-600"
-                  }`
-                }
-              >
-                {label}
-              </NavLink>
-            ))}
-            <div className="pt-4 border-t border-neutral-100 mt-2">
-              <NavLink
-                to="/adminlogin"
-                className="flex items-center justify-center gap-2 w-full bg-neutral-900 text-white py-3 rounded-xl font-medium"
-              >
-                Admin Login
-                <ChevronRight className="w-4 h-4" />
-              </NavLink>
-            </div>
-          </div>
-        </div>
-      </header>
+    <header className="w-full bg-white font-sans border-b-4 border-primary-600">
       
-      {/* Spacer to prevent content from going under fixed header */}
-      <div className="h-20" />
-    </>
+      {/* Top Accessibility Bar */}
+      <div className="bg-neutral-100 border-b border-neutral-200 py-1 hidden md:block">
+        <div className="max-w-6xl mx-auto px-4 flex justify-between items-center text-xs text-neutral-600">
+            <div className="flex items-center gap-4">
+                <a href="#main-content" className="hover:text-primary-600 focus:outline-none focus:ring-1">Skip to main content</a>
+                <span className="text-neutral-300">|</span>
+                <div className="flex items-center gap-2">
+                    <Accessibility className="w-3 h-3" />
+                    <a href="#" className="hover:text-primary-600">Screen Reader Access</a>
+                </div>
+            </div>
+            <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                    <button className="px-1 border border-neutral-300 bg-white hover:bg-neutral-50 font-bold" title="Decrease Font">A-</button>
+                    <button className="px-1 border border-neutral-300 bg-white hover:bg-neutral-50 font-bold" title="Normal Font">A</button>
+                    <button className="px-1 border border-neutral-300 bg-white hover:bg-neutral-50 font-bold" title="Increase Font">A+</button>
+                </div>
+                <span className="text-neutral-300">|</span>
+                <a href="#" className="hover:text-primary-600 font-bold">English</a>
+                <span className="text-neutral-300">|</span>
+                <a href="#" className="hover:text-primary-600">Sitemap</a>
+            </div>
+        </div>
+      </div>
+
+      {/* Main Logo Area */}
+      <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="flex items-center gap-4">
+            <img src={edhaaIcon} alt="EDHAA Public School Logo" className="w-20 h-20 md:w-24 md:h-24 object-contain" />
+            <div className="flex flex-col text-center md:text-left">
+                    <h2 className="text-xl md:text-3xl font-bold text-primary-800 tracking-wide uppercase mt-1 leading-tight">EDHAA PUBLIC SCHOOL</h2>
+                    <p className="text-primary-700 font-bold text-sm">Bengaluru, Karnataka</p>
+                    <p className="text-neutral-500 text-xs mt-1">
+                    Affiliated to the Council for the Indian School Certificate Examinations (ICSE)
+                    </p>
+            </div>
+        </div>
+      </div>
+
+      {/* Primary Navigation (Blue Bar) */}
+      <nav className="bg-primary-600 w-full relative z-50 shadow-md">
+        <div className="max-w-6xl mx-auto px-4 flex justify-between items-center">
+            
+            {/* Desktop Menu */}
+            <div className="hidden lg:flex w-full">
+                <NavLink to="/" className={({isActive}) => `px-4 py-3 text-white text-sm font-bold uppercase transition-colors border-r border-primary-500 hover:bg-primary-700 ${isActive ? 'bg-primary-700' : ''}`}>Home</NavLink>
+                <NavLink to="/AboutUs" className={({isActive}) => `px-4 py-3 text-white text-sm font-bold uppercase transition-colors border-r border-primary-500 hover:bg-primary-700 ${isActive ? 'bg-primary-700' : ''}`}>About Us</NavLink>
+                <NavLink to="/Academics" className={({isActive}) => `px-4 py-3 text-white text-sm font-bold uppercase transition-colors border-r border-primary-500 hover:bg-primary-700 ${isActive ? 'bg-primary-700' : ''}`}>Academics</NavLink>
+                <NavLink to="/Activities" className={({isActive}) => `px-4 py-3 text-white text-sm font-bold uppercase transition-colors border-r border-primary-500 hover:bg-primary-700 ${isActive ? 'bg-primary-700' : ''}`}>Activities</NavLink>
+                <NavLink to="/Facilities" className={({isActive}) => `px-4 py-3 text-white text-sm font-bold uppercase transition-colors border-r border-primary-500 hover:bg-primary-700 ${isActive ? 'bg-primary-700' : ''}`}>Infrastructure</NavLink>
+                <NavLink to="/NewsAndEvenets" className={({isActive}) => `px-4 py-3 text-white text-sm font-bold uppercase transition-colors border-r border-primary-500 hover:bg-primary-700 ${isActive ? 'bg-primary-700' : ''}`}>News & Events</NavLink>
+                <NavLink to="/Contact" className={({isActive}) => `px-4 py-3 text-white text-sm font-bold uppercase transition-colors border-r border-primary-500 hover:bg-primary-700 ${isActive ? 'bg-primary-700' : ''}`}>Contact</NavLink>
+                <NavLink to="/adminlogin" className="px-4 py-3 text-white text-sm font-bold uppercase transition-colors hover:bg-primary-700 ml-auto flex items-center gap-2">Admin Login</NavLink>
+            </div>
+
+            {/* Mobile Toggle */}
+            <div className="lg:hidden w-full flex justify-between items-center py-2">
+                <span className="text-white font-bold uppercase px-2">Main Menu</span>
+                <button onClick={() => setMenuOpen(!menuOpen)} className="text-white p-2">
+                    {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                </button>
+            </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {menuOpen && (
+            <div className="lg:hidden bg-primary-700 w-full flex flex-col border-t border-primary-500">
+                <NavLink to="/" onClick={() => setMenuOpen(false)} className="px-6 py-3 text-white text-sm font-bold uppercase border-b border-primary-600 hover:bg-primary-800">Home</NavLink>
+                <NavLink to="/AboutUs" onClick={() => setMenuOpen(false)} className="px-6 py-3 text-white text-sm font-bold uppercase border-b border-primary-600 hover:bg-primary-800">About Us</NavLink>
+                <NavLink to="/Academics" onClick={() => setMenuOpen(false)} className="px-6 py-3 text-white text-sm font-bold uppercase border-b border-primary-600 hover:bg-primary-800">Academics</NavLink>
+                <NavLink to="/Activities" onClick={() => setMenuOpen(false)} className="px-6 py-3 text-white text-sm font-bold uppercase border-b border-primary-600 hover:bg-primary-800">Activities</NavLink>
+                <NavLink to="/Facilities" onClick={() => setMenuOpen(false)} className="px-6 py-3 text-white text-sm font-bold uppercase border-b border-primary-600 hover:bg-primary-800">Infrastructure</NavLink>
+                <NavLink to="/NewsAndEvenets" onClick={() => setMenuOpen(false)} className="px-6 py-3 text-white text-sm font-bold uppercase border-b border-primary-600 hover:bg-primary-800">News & Events</NavLink>
+                <NavLink to="/Contact" onClick={() => setMenuOpen(false)} className="px-6 py-3 text-white text-sm font-bold uppercase border-b border-primary-600 hover:bg-primary-800">Contact</NavLink>
+                <NavLink to="/adminlogin" onClick={() => setMenuOpen(false)} className="px-6 py-3 text-white text-sm font-bold uppercase hover:bg-primary-800 bg-primary-800">Admin Login</NavLink>
+            </div>
+        )}
+      </nav>
+
+    </header>
   );
 }

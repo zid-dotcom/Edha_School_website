@@ -1,108 +1,167 @@
 import React from 'react'
-import Hero from '../components/Hero'
-import Testimonial from '../components/Testimonials'
-import { motion } from 'framer-motion'
-import { ArrowRight, BookOpen, Heart, Shield, Sparkles } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
-
-const features = [
-  {
-    icon: <BookOpen className="w-6 h-6 text-primary-600" />,
-    title: "Global Curriculum",
-    description: "Our curriculum is designed to meet international standards, ensuring students are prepared for global challenges."
-  },
-  {
-    icon: <Sparkles className="w-6 h-6 text-primary-600" />,
-    title: "Modern Facilities",
-    description: "State-of-the-art labs, libraries, and sports complexes that foster holistic development."
-  },
-  {
-    icon: <Shield className="w-6 h-6 text-primary-600" />,
-    title: "Safe Environment",
-    description: "24/7 security and a nurturing atmosphere where every child feels valued and protected."
-  },
-  {
-    icon: <Heart className="w-6 h-6 text-primary-600" />,
-    title: "Dedicated Faculty",
-    description: "Experienced educators who are passionate about mentoring the next generation of leaders."
-  }
-]
+import { Link } from 'react-router-dom'
+import schoolImage from '../assets/SchoolImage.jpg'
 
 const Home = () => {
-  const navigate = useNavigate();
-
   return (
-    <div className="bg-white">
-      <Hero />
+    <div className="bg-neutral-50 font-sans pb-10">
       
-      {/* Features Section */}
-      <section className="section-padding bg-neutral-50 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div className="max-w-2xl">
-              <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
-                Why choose EDHAA?
-              </h2>
-              <p className="text-lg text-neutral-600">
-                We combine academic rigor with character building, providing an environment where students can truly discover their potential.
-              </p>
-            </div>
-            <button 
-              onClick={() => navigate("/AboutUs")}
-              className="group flex items-center gap-2 text-primary-600 font-medium hover:text-primary-700 transition-colors"
-            >
-              Learn more about us
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
+      {/* Hero Banner (Full Width but constrained height) */}
+      <div className="w-full h-[350px] md:h-[450px] lg:h-[500px] bg-white border-b border-neutral-200 relative overflow-hidden">
+        <img src={schoolImage} alt="Edhaa Public School Campus" className="w-full h-full object-cover object-top" />
+        <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 lg:left-1/4 lg:-translate-x-0 bg-primary-900/90 text-white px-4 py-2 sm:px-8 sm:py-4 font-bold text-lg sm:text-2xl md:text-3xl border-l-4 sm:border-l-8 border-white tracking-wide shadow-lg text-center w-max max-w-[90vw] whitespace-normal sm:whitespace-nowrap z-10">
+            Welcome to Edhaa Public School
+        </div>
+      </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <motion.div 
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary-50 flex items-center justify-center mb-6">
-                  {feature.icon}
+      {/* Marquee News Ticker */}
+      <div className="max-w-6xl mx-auto bg-white border-x border-b border-neutral-200 shadow-sm flex items-center">
+        <div className="bg-primary-700 text-white font-bold px-4 py-2 whitespace-nowrap text-sm uppercase flex-shrink-0 tracking-wider">
+            Announcements
+        </div>
+        <div className="marquee-container w-full py-2 px-4 text-primary-800 text-sm font-bold flex items-center bg-neutral-100">
+            <div className="marquee-content">
+                <span className="mx-4 text-primary-600">✦</span>
+                <Link to="/NewsAndEvenets" className="hover:underline text-primary-800">Admissions Open for Academic Session 2025-26. Click here to download forms.</Link>
+                <span className="mx-4 text-primary-600">✦</span>
+                <Link to="/NewsAndEvenets" className="hover:underline text-primary-800">Annual Sports Meet scheduled for 15th December.</Link>
+                <span className="mx-4 text-primary-600">✦</span>
+                <Link to="/NewsAndEvenets" className="hover:underline text-primary-800">Parent-Teacher Meeting (PTM) for Term 1 results on Saturday.</Link>
+            </div>
+        </div>
+      </div>
+
+      {/* Main Content: 3 Column Layout */}
+      <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6 px-4 xl:px-0">
+        
+        {/* Left Column: Management Message */}
+        <div className="lg:col-span-3 flex flex-col gap-6">
+            <div className="kvs-card">
+                <div className="bg-primary-600 text-white px-4 py-2 font-bold uppercase text-sm border-b-2 border-primary-800">
+                    Secretary's Message
                 </div>
-                <h3 className="text-xl font-semibold text-neutral-900 mb-3">{feature.title}</h3>
-                <p className="text-neutral-600 leading-relaxed">{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="section-padding">
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-primary-900 rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-primary-500 rounded-full blur-[100px] opacity-50"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary-700 rounded-full blur-[100px] opacity-50"></div>
-            
-            <div className="relative z-10 max-w-2xl mx-auto">
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-                Ready to shape your child's future?
-              </h2>
-              <p className="text-primary-100 text-lg mb-10">
-                Join EDHAA Public School today and give your child the foundation they need to succeed in life.
-              </p>
-              <button 
-                onClick={() => navigate("/Contact")}
-                className="bg-white text-primary-900 px-8 py-4 rounded-xl font-semibold hover:bg-primary-50 transition-colors shadow-lg"
-              >
-                Start Admission Process
-              </button>
+                <div className="p-4 flex flex-col items-center text-center bg-white">
+                    <div className="w-24 h-24 bg-neutral-100 border border-neutral-200 p-1 mb-3 rounded-sm shadow-sm">
+                        <img src="https://ui-avatars.com/api/?name=Mahalakshmi+N+Reddy&background=1b4d90&color=fff" alt="Secretary" className="w-full h-full object-cover" />
+                    </div>
+                    <h3 className="font-bold text-primary-800 text-sm mb-1">Smt. Mahalakshmi N Reddy</h3>
+                    <h4 className="font-bold text-neutral-600 text-xs mb-3">(Secretary)</h4>
+                    <p className="text-xs text-neutral-700 leading-relaxed text-justify mb-3">
+                        Education is the most powerful catalyst for social transformation. At Edhaa Public School, our constant endeavor is to provide a safe, secure, and stimulating environment where children can discover their true potential and develop a passion for lifelong learning.
+                    </p>
+                    <Link to="/AboutUs" className="text-xs text-primary-700 font-bold hover:underline self-end">Read More »</Link>
+                </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <Testimonial />
+            <div className="kvs-card">
+                <div className="bg-primary-600 text-white px-4 py-2 font-bold uppercase text-sm border-b-2 border-primary-800">
+                    Director's Message
+                </div>
+                <div className="p-4 bg-white">
+                    <h3 className="font-bold text-primary-800 text-sm mb-1">Shri. Thrilok S</h3>
+                    <p className="text-xs text-neutral-700 leading-relaxed text-justify mb-2">
+                        We aim to nurture students who are intellectually competent, morally upright, and socially committed. Our focus is on holistic development through rigorous academic curriculum supported by robust co-curricular activities.
+                    </p>
+                    <Link to="/AboutUs" className="text-xs text-primary-700 font-bold hover:underline flex justify-end">Read More »</Link>
+                </div>
+            </div>
+        </div>
+
+        {/* Center Column: About Edhaa & Quick Links */}
+        <div className="lg:col-span-6 flex flex-col gap-6">
+            <div className="kvs-card">
+                <div className="bg-primary-600 text-white px-4 py-2 font-bold uppercase text-sm border-b-2 border-primary-800">
+                    About Edhaa Public School
+                </div>
+                <div className="p-5 bg-white">
+                    <p className="text-sm text-neutral-700 leading-relaxed text-justify mb-4">
+                        Edhaa Public School, located in Whitefield, Bengaluru, is a premier educational institution affiliated to the Council for the Indian School Certificate Examinations (ICSE). We offer a comprehensive educational program from Kindergarten to Senior Secondary levels. Our campus boasts state-of-the-art infrastructure designed to facilitate modern pedagogical practices.
+                    </p>
+                    <p className="text-sm text-neutral-700 leading-relaxed text-justify mb-5">
+                        Our institution is built on the foundation of academic excellence, discipline, and strong ethical values. We ensure that every student receives individualized attention to foster their unique talents and prepare them for future global challenges.
+                    </p>
+                    
+                    <h4 className="font-bold text-primary-800 text-sm border-b border-neutral-200 pb-2 mb-3">Quick Links</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <Link to="/Academics" className="flex items-center gap-2 p-2 bg-neutral-50 border border-neutral-200 hover:bg-primary-50 transition-colors group">
+                            <div className="w-1.5 h-1.5 bg-primary-600 group-hover:bg-primary-800"></div>
+                            <span className="text-sm font-bold text-primary-700 group-hover:text-primary-900">Academics</span>
+                        </Link>
+                        <Link to="/Facilities" className="flex items-center gap-2 p-2 bg-neutral-50 border border-neutral-200 hover:bg-primary-50 transition-colors group">
+                            <div className="w-1.5 h-1.5 bg-primary-600 group-hover:bg-primary-800"></div>
+                            <span className="text-sm font-bold text-primary-700 group-hover:text-primary-900">Infrastructure</span>
+                        </Link>
+                        <Link to="/Activities" className="flex items-center gap-2 p-2 bg-neutral-50 border border-neutral-200 hover:bg-primary-50 transition-colors group">
+                            <div className="w-1.5 h-1.5 bg-primary-600 group-hover:bg-primary-800"></div>
+                            <span className="text-sm font-bold text-primary-700 group-hover:text-primary-900">Activities</span>
+                        </Link>
+                        <Link to="/Contact" className="flex items-center gap-2 p-2 bg-neutral-50 border border-neutral-200 hover:bg-primary-50 transition-colors group">
+                            <div className="w-1.5 h-1.5 bg-primary-600 group-hover:bg-primary-800"></div>
+                            <span className="text-sm font-bold text-primary-700 group-hover:text-primary-900">Contact Us</span>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+
+            {/* Statistics Row - Formal Theme */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="border border-neutral-200 bg-white p-4 text-center shadow-sm">
+                    <h4 className="text-3xl font-bold text-primary-700 mb-1">1200+</h4>
+                    <p className="text-xs text-neutral-600 font-bold tracking-wide uppercase">Students</p>
+                </div>
+                <div className="border border-neutral-200 bg-white p-4 text-center shadow-sm">
+                    <h4 className="text-3xl font-bold text-primary-700 mb-1">80+</h4>
+                    <p className="text-xs text-neutral-600 font-bold tracking-wide uppercase">Faculty</p>
+                </div>
+                <div className="border border-neutral-200 bg-white p-4 text-center shadow-sm">
+                    <h4 className="text-3xl font-bold text-primary-700 mb-1">100%</h4>
+                    <p className="text-xs text-neutral-600 font-bold tracking-wide uppercase">Pass Rate</p>
+                </div>
+            </div>
+        </div>
+
+        {/* Right Column: Latest Updates */}
+        <div className="lg:col-span-3 flex flex-col gap-6">
+            <div className="kvs-card">
+                <div className="bg-primary-600 text-white px-4 py-2 font-bold uppercase text-sm border-b-2 border-primary-800 flex justify-between items-center">
+                    Latest Updates
+                </div>
+                <div className="p-0 bg-white">
+                    <ul className="flex flex-col">
+                        <li className="border-b border-neutral-200 p-3 hover:bg-neutral-50 transition-colors">
+                            <Link to="/NewsAndEvenets" className="flex flex-col gap-1">
+                                <span className="text-xs font-bold text-primary-700 leading-tight">Registration Form for Class I Admissions 2025-26</span>
+                                <span className="text-[10px] text-neutral-500 flex items-center gap-1 font-medium">Published: 24 Apr 2025</span>
+                            </Link>
+                        </li>
+                        <li className="border-b border-neutral-200 p-3 hover:bg-neutral-50 transition-colors">
+                            <Link to="/NewsAndEvenets" className="flex flex-col gap-1">
+                                <span className="text-xs font-bold text-primary-700 leading-tight">Circular regarding Summer Vacation Dates</span>
+                                <span className="text-[10px] text-neutral-500 flex items-center gap-1 font-medium">Published: 18 Apr 2025</span>
+                            </Link>
+                        </li>
+                        <li className="border-b border-neutral-200 p-3 hover:bg-neutral-50 transition-colors">
+                            <Link to="/NewsAndEvenets" className="flex flex-col gap-1">
+                                <span className="text-xs font-bold text-primary-700 leading-tight">Syllabus distribution for Term 1 Assessments</span>
+                                <span className="text-[10px] text-neutral-500 flex items-center gap-1 font-medium">Published: 03 Mar 2025</span>
+                            </Link>
+                        </li>
+                        <li className="border-b border-neutral-200 p-3 hover:bg-neutral-50 transition-colors">
+                            <Link to="/NewsAndEvenets" className="flex flex-col gap-1">
+                                <span className="text-xs font-bold text-primary-700 leading-tight">Recruitment Notice: Walk-in Interview for PGT/TGT</span>
+                                <span className="text-[10px] text-neutral-500 flex items-center gap-1 font-medium">Published: 01 Mar 2025</span>
+                            </Link>
+                        </li>
+                    </ul>
+                    <div className="p-3 bg-neutral-100 border-t border-neutral-200 text-right">
+                        <Link to="/NewsAndEvenets" className="text-xs text-primary-700 font-bold hover:underline">View All Circulars »</Link>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      </div>
+
     </div>
   )
 }
