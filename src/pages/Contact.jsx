@@ -1,182 +1,136 @@
 import { useState } from "react";
-import { MapPin, Phone, Mail, Printer, User, ShieldAlert } from "lucide-react";
+import { motion } from "framer-motion";
+import { MapPin, Phone, Mail, Printer, User, ShieldAlert, ArrowRight } from "lucide-react";
 
 export default function Contact() {
-  const [activeTab, setActiveTab] = useState("contact");
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const fadeUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }
   };
 
+  const stagger = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+  };
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
   const handleSubmit = (e) => {
     e.preventDefault();
     alert("Message sent successfully!");
     setForm({ name: "", email: "", message: "" });
   };
 
-  const renderContent = () => {
-    switch (activeTab) {
-      case "contact":
-        return (
-          <div className="p-0 grid md:grid-cols-2">
-            {/* Contact Details */}
-            <div className="p-6 border-b md:border-b-0 md:border-r border-neutral-200 flex flex-col gap-6 bg-white">
-              <div className="flex gap-4 items-start">
-                <div className="mt-1 bg-neutral-100 p-2 border border-neutral-200 text-primary-600 shadow-sm">
-                  <MapPin className="w-5 h-5" />
+  return (
+    <div className="bg-neutral-50 font-sans overflow-hidden">
+      
+      {/* Contact Hero & Form Layout */}
+      <div className="relative bg-primary-900 pt-32 pb-48 lg:pb-64">
+        <div className="absolute inset-0 z-0 opacity-20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary-400 via-primary-900 to-primary-900"></div>
+        <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
+          <motion.h1 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-6">Get in Touch</motion.h1>
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="text-xl text-primary-200 max-w-2xl mx-auto">
+            Whether you have a question about admissions, academic programs, or anything else, our team is ready to answer all your questions.
+          </motion.p>
+        </div>
+      </div>
+
+      {/* Floating Contact Cards & Form */}
+      <div className="max-w-7xl mx-auto px-4 -mt-32 lg:-mt-48 relative z-20 mb-24">
+        <div className="grid lg:grid-cols-5 gap-8">
+          
+          <motion.div initial="hidden" animate="visible" variants={stagger} className="lg:col-span-2 space-y-6">
+            <motion.div variants={fadeUp} className="bg-white p-8 rounded-3xl shadow-xl flex items-start gap-5 border border-neutral-100">
+              <div className="w-14 h-14 bg-primary-50 text-primary-600 rounded-2xl flex items-center justify-center shrink-0"><MapPin className="w-6 h-6" /></div>
+              <div>
+                <h4 className="font-bold text-primary-900 text-lg mb-2">Visit Us</h4>
+                <p className="text-neutral-600 leading-relaxed">EDHAA PUBLIC SCHOOL<br/>Survey No. 45/2, Whitefield Main Road,<br/>Bengaluru, Karnataka - 560066</p>
+              </div>
+            </motion.div>
+            
+            <motion.div variants={fadeUp} className="bg-white p-8 rounded-3xl shadow-xl flex items-start gap-5 border border-neutral-100">
+              <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center shrink-0"><Phone className="w-6 h-6" /></div>
+              <div>
+                <h4 className="font-bold text-primary-900 text-lg mb-2">Call Us</h4>
+                <p className="text-neutral-600 mb-1">+91 80 4123 5678</p>
+                <p className="text-neutral-600">+91 98450 12345</p>
+              </div>
+            </motion.div>
+
+            <motion.div variants={fadeUp} className="bg-white p-8 rounded-3xl shadow-xl flex items-start gap-5 border border-neutral-100">
+              <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center shrink-0"><Mail className="w-6 h-6" /></div>
+              <div>
+                <h4 className="font-bold text-primary-900 text-lg mb-2">Email Us</h4>
+                <p className="text-neutral-600 break-all">info@edhaapublicschool.edu.in</p>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="lg:col-span-3 bg-white p-10 md:p-14 rounded-3xl shadow-2xl border border-neutral-100 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary-50 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"></div>
+            <h3 className="text-3xl font-bold text-primary-900 mb-8">Send us a Message</h3>
+            <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="text-sm font-bold text-neutral-700 block mb-2">Full Name</label>
+                  <input type="text" name="name" value={form.name} onChange={handleChange} required className="w-full bg-neutral-50 border border-neutral-200 rounded-xl p-4 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all" placeholder="John Doe" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-primary-800 text-sm mb-1 uppercase tracking-wider">Address</h3>
-                  <p className="text-sm text-neutral-600 leading-relaxed">
-                    EDHAA PUBLIC SCHOOL<br />
-                    Survey No. 45/2, Whitefield Main Road,<br />
-                    Bengaluru, Karnataka - 560066
-                  </p>
+                  <label className="text-sm font-bold text-neutral-700 block mb-2">Email Address</label>
+                  <input type="email" name="email" value={form.email} onChange={handleChange} required className="w-full bg-neutral-50 border border-neutral-200 rounded-xl p-4 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all" placeholder="john@example.com" />
                 </div>
               </div>
-
-              <div className="flex gap-4 items-start">
-                <div className="mt-1 bg-neutral-100 p-2 border border-neutral-200 text-primary-600 shadow-sm">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-primary-800 text-sm mb-1 uppercase tracking-wider">Phone Number</h3>
-                  <p className="text-sm text-neutral-600">+91 80 4123 5678, +91 98450 12345</p>
-                </div>
+              <div>
+                <label className="text-sm font-bold text-neutral-700 block mb-2">Your Message</label>
+                <textarea name="message" rows="5" value={form.message} onChange={handleChange} required className="w-full bg-neutral-50 border border-neutral-200 rounded-xl p-4 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all resize-none" placeholder="How can we help you?"></textarea>
               </div>
+              <button type="submit" className="bg-primary-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-primary-700 transition-colors shadow-lg hover:shadow-primary-600/30 w-full sm:w-auto flex items-center justify-center gap-2">
+                Send Message <ArrowRight className="w-5 h-5" />
+              </button>
+            </form>
+          </motion.div>
 
-              <div className="flex gap-4 items-start">
-                <div className="mt-1 bg-neutral-100 p-2 border border-neutral-200 text-primary-600 shadow-sm">
-                  <Mail className="w-5 h-5" />
+        </div>
+      </div>
+
+      {/* Directory of Officers (Card Grid instead of Table) */}
+      <div className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="text-center mb-16">
+            <h2 className="text-sm font-bold tracking-widest text-primary-600 uppercase mb-3">Administration</h2>
+            <h3 className="text-3xl md:text-5xl font-bold text-primary-900">Directory of Officers</h3>
+          </motion.div>
+
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { name: "Smt. Mahalakshmi N Reddy", role: "Secretary", phone: "+91 80 4123 5678", email: "secretary@edhaapublicschool.edu.in" },
+              { name: "Shri. Thrilok S", role: "Director", phone: "+91 80 4123 5679", email: "director@edhaapublicschool.edu.in" },
+              { name: "Dr. Rajesh Kumar", role: "Principal", phone: "+91 80 4123 5680", email: "principal@edhaapublicschool.edu.in" },
+              { name: "Mr. Anand Verma", role: "Admin Officer", phone: "+91 98450 12345", email: "admin@edhaapublicschool.edu.in" }
+            ].map((officer, i) => (
+              <motion.div key={i} variants={fadeUp} className="bg-neutral-50 rounded-3xl p-8 border border-neutral-100 text-center hover:bg-white hover:shadow-xl transition-all duration-300">
+                <div className="w-16 h-16 bg-primary-100 text-primary-700 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <User className="w-8 h-8" />
                 </div>
-                <div>
-                  <h3 className="font-bold text-primary-800 text-sm mb-1 uppercase tracking-wider">Email Address</h3>
-                  <p className="text-sm text-neutral-600">info@edhaapublicschool.edu.in</p>
+                <h4 className="font-bold text-primary-900 text-lg mb-1">{officer.name}</h4>
+                <p className="text-sm font-bold text-primary-600 uppercase tracking-widest mb-6">{officer.role}</p>
+                <div className="space-y-2 text-sm text-neutral-600">
+                  <p>{officer.phone}</p>
+                  <p className="break-all">{officer.email}</p>
                 </div>
-              </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </div>
 
-              <div className="mt-auto pt-4 border-t border-neutral-200">
-                <button 
-                  onClick={() => window.print()}
-                  className="flex items-center gap-2 text-xs font-bold text-primary-600 hover:text-primary-800 transition-colors uppercase tracking-wider"
-                >
-                  <Printer className="w-4 h-4" /> Print Contact Details
-                </button>
-              </div>
-            </div>
-
-            {/* Simple Form typical of institutional feedback sections */}
-            <div className="p-6 bg-neutral-50">
-              <h3 className="font-bold text-primary-800 text-sm mb-4 uppercase tracking-wider border-b border-neutral-300 pb-2">Feedback / Enquiry Form</h3>
-              
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs font-bold text-neutral-600">Name <span className="text-red-500">*</span></label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-white border border-neutral-300 p-2 text-sm focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs font-bold text-neutral-600">Email Address <span className="text-red-500">*</span></label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-white border border-neutral-300 p-2 text-sm focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs font-bold text-neutral-600">Message / Enquiry <span className="text-red-500">*</span></label>
-                  <textarea
-                    name="message"
-                    rows="4"
-                    value={form.message}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-white border border-neutral-300 p-2 text-sm focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 resize-none"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="bg-primary-600 text-white px-5 py-2 text-sm font-bold uppercase hover:bg-primary-700 transition-colors border border-primary-800 shadow-sm"
-                >
-                  Submit Details
-                </button>
-              </form>
-            </div>
-          </div>
-        );
-
-      case "directory":
-        return (
-          <div className="p-6 bg-white">
-            <h3 className="font-bold text-primary-800 text-sm mb-4 uppercase tracking-wider border-b border-neutral-300 pb-2">Directory of Officers</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse min-w-[600px]">
-                <thead>
-                  <tr className="bg-neutral-100 text-primary-800 text-sm border-b border-neutral-300">
-                    <th className="p-3 font-bold border-r border-neutral-300">Name</th>
-                    <th className="p-3 font-bold border-r border-neutral-300">Designation</th>
-                    <th className="p-3 font-bold border-r border-neutral-300">Contact Number</th>
-                    <th className="p-3 font-bold">Email ID</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b border-neutral-200 hover:bg-neutral-50 text-sm">
-                    <td className="p-3 border-r border-neutral-200 font-bold text-primary-700">Smt. Mahalakshmi N Reddy</td>
-                    <td className="p-3 border-r border-neutral-200 text-neutral-600">Secretary</td>
-                    <td className="p-3 border-r border-neutral-200 text-neutral-600">+91 80 4123 5678</td>
-                    <td className="p-3 text-neutral-600">secretary@edhaapublicschool.edu.in</td>
-                  </tr>
-                  <tr className="border-b border-neutral-200 hover:bg-neutral-50 text-sm">
-                    <td className="p-3 border-r border-neutral-200 font-bold text-primary-700">Shri. Thrilok S</td>
-                    <td className="p-3 border-r border-neutral-200 text-neutral-600">Director</td>
-                    <td className="p-3 border-r border-neutral-200 text-neutral-600">+91 80 4123 5679</td>
-                    <td className="p-3 text-neutral-600">director@edhaapublicschool.edu.in</td>
-                  </tr>
-                  <tr className="border-b border-neutral-200 hover:bg-neutral-50 text-sm">
-                    <td className="p-3 border-r border-neutral-200 font-bold text-primary-700">Dr. Rajesh Kumar</td>
-                    <td className="p-3 border-r border-neutral-200 text-neutral-600">Principal</td>
-                    <td className="p-3 border-r border-neutral-200 text-neutral-600">+91 80 4123 5680</td>
-                    <td className="p-3 text-neutral-600">principal@edhaapublicschool.edu.in</td>
-                  </tr>
-                  <tr className="border-b border-neutral-200 hover:bg-neutral-50 text-sm">
-                    <td className="p-3 border-r border-neutral-200 font-bold text-primary-700">Mr. Anand Verma</td>
-                    <td className="p-3 border-r border-neutral-200 text-neutral-600">Admin Officer</td>
-                    <td className="p-3 border-r border-neutral-200 text-neutral-600">+91 98450 12345</td>
-                    <td className="p-3 text-neutral-600">admin@edhaapublicschool.edu.in</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        );
-
-      case "map":
-        return (
-          <div className="p-6 bg-white flex flex-col gap-4">
-            <h3 className="font-bold text-primary-800 text-sm uppercase tracking-wider border-b border-neutral-300 pb-2">School Location Map</h3>
-            <p className="text-sm text-neutral-600 leading-relaxed">
-              Find us easily using the interactive map below. Our campus is situated in the prominent educational hub of Whitefield, Bengaluru.
-            </p>
-            <div className="w-full h-[400px] border-4 border-neutral-200 bg-neutral-100 flex items-center justify-center relative">
-              {/* Google Maps embed iframe pointing to Whitefield Bengaluru */}
-              <iframe 
+      {/* Map & Grievance Split */}
+      <div className="py-24 bg-neutral-100">
+        <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-16">
+          
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="rounded-3xl overflow-hidden shadow-xl border border-neutral-200 h-[500px]">
+             <iframe 
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.1065449704046!2d77.72898717596006!3d12.964972587349781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae11f35d0dfc83%3A0x30cfa512d80115f9!2sWhitefield%2C%20Bengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1708453443831!5m2!1sen!2sin" 
                 width="100%" 
                 height="100%" 
@@ -185,123 +139,38 @@ export default function Contact() {
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade"
                 title="School Location Map"
-                className="absolute inset-0"
               ></iframe>
-            </div>
-          </div>
-        );
+          </motion.div>
 
-      case "grievance":
-        return (
-          <div className="p-6 bg-white">
-            <div className="flex items-center gap-3 border-b border-neutral-300 pb-2 mb-4">
-              <ShieldAlert className="w-5 h-5 text-red-600" />
-              <h3 className="font-bold text-primary-800 text-sm uppercase tracking-wider">Grievance Redressal</h3>
-            </div>
-            
-            <p className="text-sm text-neutral-600 leading-relaxed mb-6">
-              EDHAA Public School is committed to providing a safe, transparent, and fair environment. If you have any grievances or complaints regarding academic or administrative matters, please reach out to our dedicated Grievance Redressal Committee.
-            </p>
-            
-            <div className="bg-neutral-50 border border-neutral-200 p-5 mb-6">
-              <h4 className="font-bold text-primary-800 text-sm mb-3 border-b border-neutral-200 pb-2">Grievance Officer Contact</h4>
-              <div className="flex items-start gap-4 mb-2">
-                <User className="w-4 h-4 text-primary-600 mt-1 shrink-0" />
-                <div>
-                  <p className="font-bold text-sm text-neutral-800">Dr. Rajesh Kumar (Principal)</p>
-                  <p className="text-sm text-neutral-600">grievance@edhaapublicschool.edu.in</p>
-                  <p className="text-sm text-neutral-600">+91 80 4123 5680</p>
-                </div>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="bg-red-50 p-10 md:p-14 rounded-3xl border border-red-100">
+            <div className="flex items-center gap-4 mb-8 border-b border-red-200 pb-6">
+              <div className="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center shrink-0">
+                <ShieldAlert className="w-8 h-8" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-red-900 mb-1">Grievance Redressal</h3>
+                <p className="text-red-700 text-sm font-medium">Safe, transparent, and fair resolution.</p>
               </div>
             </div>
+            <p className="text-red-900/80 leading-relaxed mb-8">
+              EDHAA Public School is committed to providing a safe environment. If you have any grievances regarding academic or administrative matters, please reach out directly to our Grievance Redressal Committee.
+            </p>
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-red-100 mb-8">
+              <h4 className="font-bold text-red-900 mb-4">Grievance Officer Contact</h4>
+              <div className="space-y-2 text-neutral-700">
+                <p><span className="font-bold">Officer:</span> Dr. Rajesh Kumar (Principal)</p>
+                <p><span className="font-bold">Email:</span> grievance@edhaapublicschool.edu.in</p>
+                <p><span className="font-bold">Phone:</span> +91 80 4123 5680</p>
+              </div>
+            </div>
+            <button className="w-full bg-red-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-red-700 transition-colors shadow-lg shadow-red-600/20">
+              Submit an Online Grievance
+            </button>
+          </motion.div>
 
-            <h4 className="font-bold text-primary-800 text-sm mb-3">Online Grievance Submission</h4>
-            <form onSubmit={(e) => { e.preventDefault(); alert("Grievance registered. The officer will contact you shortly."); }} className="space-y-4">
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs font-bold text-neutral-600">Full Name <span className="text-red-500">*</span></label>
-                  <input type="text" required className="w-full bg-white border border-neutral-300 p-2 text-sm focus:outline-none focus:border-primary-500" />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs font-bold text-neutral-600">Role <span className="text-red-500">*</span></label>
-                  <select required className="w-full bg-white border border-neutral-300 p-2 text-sm focus:outline-none focus:border-primary-500">
-                    <option value="">Select Role</option>
-                    <option value="parent">Parent / Guardian</option>
-                    <option value="student">Student</option>
-                    <option value="staff">Staff Member</option>
-                  </select>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs font-bold text-neutral-600">Detailed Description of Grievance <span className="text-red-500">*</span></label>
-                  <textarea rows="5" required className="w-full bg-white border border-neutral-300 p-2 text-sm focus:outline-none focus:border-primary-500 resize-none" />
-                </div>
-                <button type="submit" className="bg-red-600 text-white px-5 py-2 text-sm font-bold uppercase hover:bg-red-700 transition-colors border border-red-800 shadow-sm">
-                  Register Grievance
-                </button>
-            </form>
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
-
-  const menuItems = [
-    { id: "contact", label: "Contact Details" },
-    { id: "directory", label: "Directory of Officers" },
-    { id: "map", label: "School Location Map" },
-    { id: "grievance", label: "Grievance Redressal" },
-  ];
-
-  return (
-    <div className="bg-neutral-50 font-sans pb-10 min-h-screen">
-      
-      {/* Page Header */}
-      <div className="bg-primary-700 py-6 px-4 border-b border-primary-800">
-        <div className="max-w-6xl mx-auto">
-            <h1 className="text-2xl font-bold text-white uppercase tracking-wider">Contact Us</h1>
-            <p className="text-primary-200 text-sm mt-1 font-medium">Home / Contact Us</p>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 md:grid-cols-12 gap-6 px-4 md:px-0">
-          
-        {/* Left Sidebar Menu */}
-        <div className="md:col-span-3 flex flex-col gap-6">
-            <div className="bg-white border border-neutral-200 shadow-sm">
-                <div className="bg-primary-600 text-white px-4 py-3 font-bold uppercase text-sm border-b-2 border-primary-800">
-                    Contact Menu
-                </div>
-                <div className="flex flex-col text-sm font-bold text-primary-800">
-                    {menuItems.map((item) => (
-                      <button
-                        key={item.id}
-                        onClick={() => setActiveTab(item.id)}
-                        className={`p-3 text-left border-b border-neutral-200 transition-colors ${
-                          activeTab === item.id 
-                            ? "bg-neutral-50 border-l-4 border-primary-600" 
-                            : "hover:bg-neutral-50 border-l-4 border-transparent"
-                        }`}
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                </div>
-            </div>
-        </div>
-
-        {/* Main Content Area */}
-        <div className="md:col-span-9 flex flex-col gap-6">
-            <div className="bg-white border border-neutral-200 shadow-sm">
-                <div className="bg-neutral-100 text-primary-800 px-4 py-3 font-bold uppercase text-sm border-b border-neutral-300">
-                    {menuItems.find(i => i.id === activeTab)?.label}
-                </div>
-                
-                {renderContent()}
-
-            </div>
-        </div>
-      </div>
     </div>
   );
 }
