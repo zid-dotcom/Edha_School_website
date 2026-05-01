@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { Camera, Image as ImageIcon, Sparkles, Filter } from "lucide-react";
+import { Camera, Image as ImageIcon, Star, Filter } from "lucide-react";
 
 export default function Gallery() {
   const [activeTab, setActiveTab] = useState("All");
@@ -11,7 +11,7 @@ export default function Gallery() {
       id: 1,
       title: "Annual Sports Meet",
       category: "Sports",
-      image: "https://images.unsplash.com/photo-1526976663112-00d539745fdd?q=80&w=1470&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&w=1470&auto=format&fit=crop",
       date: "Oct 2025",
     },
     {
@@ -150,7 +150,7 @@ export default function Gallery() {
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
-            className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
           >
             <AnimatePresence mode="popLayout">
               {filteredItems.map((item, index) => (
@@ -161,13 +161,13 @@ export default function Gallery() {
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  className="break-inside-avoid group relative rounded-[2rem] overflow-hidden bg-slate-900 shadow-xl cursor-pointer border border-white/5"
+                  className="group relative rounded-[2rem] overflow-hidden bg-slate-900 shadow-xl cursor-pointer border border-white/5 h-full flex flex-col"
                 >
                   <div className="relative overflow-hidden">
                     <img 
                       src={item.image} 
                       alt={item.title} 
-                      className={`w-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out ${index % 4 === 0 ? 'h-[500px]' : index % 3 === 0 ? 'h-[400px]' : index % 2 === 0 ? 'h-[600px]' : 'h-[350px]'}`}
+                      className="w-full h-[400px] object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-40 group-hover:opacity-80 transition-opacity duration-500" />
                     
@@ -188,7 +188,7 @@ export default function Gallery() {
 
                   <div className="absolute bottom-0 left-0 w-full p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                     <div className="flex items-center gap-2 text-primary-400 text-xs font-bold uppercase tracking-widest mb-3">
-                      <Sparkles size={14} />
+                      <Star size={14} />
                       {item.date}
                     </div>
                     <h3 className="text-2xl font-black text-white">{item.title}</h3>

@@ -545,7 +545,7 @@
 //   Calendar,
 //   ArrowUpRight,
 //   GraduationCap,
-//   Sparkles
+//   Star
 // } from "lucide-react";
 // import { useState, useEffect, useContext, useRef } from "react";
 // import { AppContext } from "../context/Appcontext";
@@ -635,7 +635,7 @@
 //             transition={{ duration: 0.8 }}
 //           >
 //             <span className="inline-flex items-center gap-2 px-4 py-2 mb-6 text-xs font-bold tracking-widest text-primary-700 uppercase bg-primary-50 rounded-full border border-primary-100 shadow-sm">
-//               <Sparkles size={14} /> Shaping Future Leaders
+//               <Star size={14} /> Shaping Future Leaders
 //             </span>
 //             <h1 className="text-6xl md:text-8xl font-extrabold text-slate-900 mb-8 tracking-tight">
 //               {latest.title}
@@ -829,7 +829,7 @@ import {
   Calendar,
   ArrowUpRight,
   GraduationCap,
-  Sparkles
+  Star
 } from "lucide-react";
 import { useState, useEffect, useContext, useRef } from "react";
 import { AppContext } from "../context/Appcontext";
@@ -902,7 +902,7 @@ export default function Academics() {
       
       {/* --- HERO SECTION: SPLIT LAYOUT --- */}
       <section ref={heroRef} className="relative min-h-[80vh] flex items-center bg-slate-50 overflow-hidden pt-32 pb-20 lg:py-0">
-        <motion.div style={{ y, opacity: heroOpacity }} className="absolute top-0 right-0 w-3/4 h-full bg-gradient-to-bl from-primary-100/60 to-transparent transform -skew-x-12 translate-x-40 z-0 rounded-bl-[120px]" />
+        <motion.div style={{ y, opacity: heroOpacity }} className="absolute top-0 right-0 w-3/4 h-full bg-gradient-to-bl from-primary-100/60 to-transparent transform -skew-x-12 translate-x-40 z-0 rounded-bl-[120px] hidden lg:block" />
         
         <div className="relative z-20 max-w-[1440px] mx-auto px-6 lg:px-12 w-full">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -913,7 +913,7 @@ export default function Academics() {
               className="max-w-2xl"
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 text-[10px] lg:text-xs font-bold tracking-widest text-primary-700 uppercase bg-white rounded-full border border-primary-200 shadow-sm">
-                <Sparkles size={14} className="text-primary-500" /> Shaping Future Leaders
+                <Star size={14} className="text-primary-500" /> Shaping Future Leaders
               </div>
               <h1 className="text-5xl md:text-6xl lg:text-7xl 2xl:text-8xl font-black text-slate-900 mb-6 tracking-tight leading-[1.1]">
                 {latest.title?.split(' ').map((word, i) => (
