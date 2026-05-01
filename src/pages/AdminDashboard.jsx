@@ -449,7 +449,7 @@ export default function AdminDashboard() {
       
       {/* SIDEBAR */}
       <aside className="w-full md:w-64 bg-white border-b md:border-r border-neutral-200 flex flex-col shrink-0 z-30">
-        <div className="h-16 flex items-center px-6 border-b border-neutral-200">
+        <div className="h-16 hidden md:flex items-center px-6 border-b border-neutral-200">
           <div className="w-6 h-6 bg-primary-600 rounded-md mr-3"></div>
           <span className="font-bold text-neutral-900 tracking-tight">EDHAA Admin</span>
         </div>
@@ -512,13 +512,23 @@ export default function AdminDashboard() {
         
         {/* TOPBAR */}
         <header className="h-16 bg-white border-b border-neutral-200 flex items-center justify-between px-4 sm:px-8 shrink-0">
-          <h1 className="text-lg font-semibold text-neutral-900">
-            {activeTab === "news" ? "News & Events Management" : activeTab === "activities" ? "Activities Management" : "Academics Management"}
-          </h1>
-          <div className="flex items-center gap-4">
-            <span className="text-sm font-medium text-neutral-500 bg-neutral-100 px-3 py-1 rounded-full">
+          <div className="flex items-center">
+            <div className="md:hidden w-6 h-6 bg-primary-600 rounded-md mr-3 shrink-0"></div>
+            <h1 className="text-base sm:text-lg font-semibold text-neutral-900 truncate">
+              {activeTab === "news" ? "News & Events" : activeTab === "activities" ? "Activities" : "Academics"}
+            </h1>
+          </div>
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+            <span className="hidden sm:inline-block text-sm font-medium text-neutral-500 bg-neutral-100 px-3 py-1 rounded-full">
               Admin Session Active
             </span>
+            <button
+              onClick={handleLogout}
+              className="md:hidden flex items-center justify-center p-2 rounded-lg text-neutral-500 hover:bg-red-50 hover:text-red-600 transition-colors border border-neutral-100 shadow-sm"
+              title="Logout"
+            >
+              <LogOut className="w-5 h-5" />
+            </button>
           </div>
         </header>
 
