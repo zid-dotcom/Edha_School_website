@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
 import { AppContext } from "../context/Appcontext";
@@ -12,11 +12,28 @@ export default function AdminDashboard() {
 
   const IconPreview = ({ name }) => {
     if (!name) return null;
-    const formattedName = name
+    
+    // Mapping for common aliases
+    const aliases = {
+      "arts": "Palette",
+      "art": "Palette",
+      "sports": "Trophy",
+      "sport": "Trophy",
+      "activities": "Trophy",
+      "activity": "Trophy",
+      "calendar": "CalendarDays",
+      "event": "CalendarDays",
+      "events": "CalendarDays"
+    };
+
+    const targetName = aliases[name.toLowerCase()] || name;
+
+    const formattedName = targetName
       .split(/[-_ ]+/)
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join("");
-    const Icon = Icons[formattedName] || Icons[name];
+      
+    const Icon = Icons[formattedName] || Icons[targetName] || Icons[name];
     return Icon ? <Icon className="w-5 h-5 text-primary-600" /> : <Icons.HelpCircle className="w-5 h-5 text-neutral-300" />;
   };
 
@@ -31,6 +48,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(false);
   const [isAddingMode, setIsAddingMode] = useState(false);
   const [editingId, setEditingId] = useState(null);
+  const scrollRef = useRef(null);
 
   const [levels, setLevels] = useState([]);
   const [methodology, setMethodology] = useState([]);
@@ -390,7 +408,9 @@ export default function AdminDashboard() {
   setEditingId(item._id);
   setIsAddingMode(true);
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (scrollRef.current) {
+    scrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+  }
 };
 
 
@@ -428,18 +448,18 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-neutral-50 flex flex-col md:flex-row font-sans">
       
       {/* SIDEBAR */}
-      <aside className="w-full md:w-64 bg-white border-r border-neutral-200 flex flex-col shrink-0">
+      <aside className="w-full md:w-64 bg-white border-b md:border-r border-neutral-200 flex flex-col shrink-0 z-30">
         <div className="h-16 flex items-center px-6 border-b border-neutral-200">
           <div className="w-6 h-6 bg-primary-600 rounded-md mr-3"></div>
           <span className="font-bold text-neutral-900 tracking-tight">EDHAA Admin</span>
         </div>
 
-        <nav className="flex-1 px-4 py-6 space-y-1">
+        <nav className="flex-row md:flex-col overflow-x-auto md:overflow-visible px-4 py-2 md:py-6 space-x-2 md:space-x-0 md:space-y-1 flex-1 no-scrollbar">
           <NavLink
             to="/admin/dashboard"
             end
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+              `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
                 isActive ? "bg-primary-50 text-primary-700" : "text-neutral-600 hover:bg-neutral-100"
               }`
             }
@@ -449,7 +469,7 @@ export default function AdminDashboard() {
           </NavLink>
           <button
             onClick={() => { setActiveTab("news"); resetForm(); }}
-            className={`flex items-center w-full gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
               activeTab === "news" ? "bg-primary-50 text-primary-700" : "text-neutral-600 hover:bg-neutral-100"
             }`}
           >
@@ -458,7 +478,7 @@ export default function AdminDashboard() {
           </button>
           <button
             onClick={() => { setActiveTab("activities"); resetForm(); }}
-            className={`flex items-center w-full gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
               activeTab === "activities" ? "bg-primary-50 text-primary-700" : "text-neutral-600 hover:bg-neutral-100"
             }`}
           >
@@ -467,7 +487,7 @@ export default function AdminDashboard() {
           </button>
           <button
             onClick={() => { setActiveTab("academics"); resetForm(); }}
-            className={`flex items-center w-full gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
               activeTab === "academics" ? "bg-primary-50 text-primary-700" : "text-neutral-600 hover:bg-neutral-100"
             }`}
           >
@@ -476,7 +496,7 @@ export default function AdminDashboard() {
           </button>
         </nav>
 
-        <div className="p-4 border-t border-neutral-200">
+        <div className="p-2 md:p-4 border-t border-neutral-200 hidden md:block">
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm font-medium text-neutral-600 hover:bg-red-50 hover:text-red-600 transition-colors"
@@ -491,7 +511,7 @@ export default function AdminDashboard() {
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         
         {/* TOPBAR */}
-        <header className="h-16 bg-white border-b border-neutral-200 flex items-center justify-between px-8 shrink-0">
+        <header className="h-16 bg-white border-b border-neutral-200 flex items-center justify-between px-4 sm:px-8 shrink-0">
           <h1 className="text-lg font-semibold text-neutral-900">
             {activeTab === "news" ? "News & Events Management" : activeTab === "activities" ? "Activities Management" : "Academics Management"}
           </h1>
@@ -503,7 +523,7 @@ export default function AdminDashboard() {
         </header>
 
         {/* SCROLLABLE AREA */}
-        <div className="flex-1 overflow-auto p-8">
+        <div ref={scrollRef} className="flex-1 overflow-auto p-4 sm:p-8">
           
           <div className="max-w-5xl mx-auto space-y-8">
             
@@ -533,7 +553,7 @@ export default function AdminDashboard() {
 
             {/* ADD FORM (CONDITIONAL) */}
             {isAddingMode && (
-              <div className="bg-white border border-neutral-200 rounded-2xl p-6 shadow-sm animate-in slide-in-from-top-4 fade-in duration-200">
+              <div className="bg-white border border-neutral-200 rounded-2xl p-4 sm:p-6 shadow-sm animate-in slide-in-from-top-4 fade-in duration-200">
                 <h3 className="text-lg font-semibold text-neutral-900 mb-6 border-b border-neutral-100 pb-4">
                   {editingId ? "Update Item" : "Create New Item"}
                 </h3>
@@ -862,7 +882,7 @@ export default function AdminDashboard() {
                           </td>
                           <td className="px-6 py-4 align-top">
                             <h4 className="text-sm font-bold text-neutral-900 mb-1">{item.title}</h4>
-                            <p className="text-xs text-neutral-500 line-clamp-2 max-w-2xl leading-relaxed">{item.description}</p>
+                            <p className="text-xs text-neutral-500 line-clamp-2 max-w-xs sm:max-w-2xl leading-relaxed">{item.description}</p>
                           </td>
                           <td className="px-6 py-4 align-top text-right whitespace-nowrap">
                             <button

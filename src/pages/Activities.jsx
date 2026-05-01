@@ -52,13 +52,28 @@ export default function Activities() {
   const renderIcon = (iconName) => {
     if (!iconName || typeof iconName !== "string") return <Icons.Trophy className="w-6 h-6" />;
 
+    // Mapping for common aliases
+    const aliases = {
+      "arts": "Palette",
+      "art": "Palette",
+      "sports": "Trophy",
+      "sport": "Trophy",
+      "activities": "Trophy",
+      "activity": "Trophy",
+      "calendar": "CalendarDays",
+      "event": "CalendarDays",
+      "events": "CalendarDays"
+    };
+
+    const targetName = aliases[iconName.toLowerCase()] || iconName;
+
     // Convert to PascalCase to match Lucide export names (e.g., "calendar-days" -> "CalendarDays")
-    const formattedName = iconName
+    const formattedName = targetName
       .split(/[-_ ]+/)
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join("");
 
-    const IconComponent = Icons[formattedName] || Icons[iconName] || Icons.Trophy;
+    const IconComponent = Icons[formattedName] || Icons[targetName] || Icons[iconName] || Icons.Trophy;
     return <IconComponent className="w-6 h-6" />;
   };
 
