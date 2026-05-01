@@ -4,10 +4,21 @@ import axios from "axios";
 import { AppContext } from "../context/Appcontext";
 import { toast } from "react-toastify";
 import { LayoutDashboard, Newspaper, LogOut, Upload, Trash2, Image as ImageIcon, Plus, Edit, BookOpen, Trophy } from "lucide-react";
+import * as Icons from "lucide-react";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const { atoken, setatoken, backendURL } = useContext(AppContext);
+
+  const IconPreview = ({ name }) => {
+    if (!name) return null;
+    const formattedName = name
+      .split(/[-_ ]+/)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join("");
+    const Icon = Icons[formattedName] || Icons[name];
+    return Icon ? <Icon className="w-5 h-5 text-primary-600" /> : <Icons.HelpCircle className="w-5 h-5 text-neutral-300" />;
+  };
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -723,7 +734,12 @@ export default function AdminDashboard() {
                               </button>
                               <div className="space-y-3 pr-8">
                                 <input type="text" placeholder="Title (e.g., Sports & Athletics)" value={card.title || ""} onChange={(e) => handleUpdateActivityCard(idx, "title", e.target.value)} className="w-full bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white transition-colors font-medium" />
-                                <input type="text" placeholder="Icon Name (e.g., Trophy, Palette)" value={card.icon || ""} onChange={(e) => handleUpdateActivityCard(idx, "icon", e.target.value)} className="w-full bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white transition-colors" />
+                                <div className="flex items-center gap-3">
+                                  <input type="text" placeholder="Icon Name (e.g., Trophy, Palette)" value={card.icon || ""} onChange={(e) => handleUpdateActivityCard(idx, "icon", e.target.value)} className="flex-1 bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white transition-colors" />
+                                  <div className="w-10 h-10 bg-neutral-100 rounded-lg flex items-center justify-center shrink-0 border border-neutral-200">
+                                    <IconPreview name={card.icon} />
+                                  </div>
+                                </div>
                                 <textarea placeholder="Description" value={card.description || ""} onChange={(e) => handleUpdateActivityCard(idx, "description", e.target.value)} className="w-full bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-2 text-sm h-20 resize-none focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white transition-colors" />
                               </div>
                             </div>

@@ -47,9 +47,18 @@ export default function Activities() {
   };
 
   const [activityData, setActivityData] = useState(defaultActivityData);
+  const [loading, setLoading] = useState(true);
 
   const renderIcon = (iconName) => {
-    const IconComponent = Icons[iconName] || Icons.Trophy;
+    if (!iconName || typeof iconName !== "string") return <Icons.Trophy className="w-6 h-6" />;
+
+    // Convert to PascalCase to match Lucide export names (e.g., "calendar-days" -> "CalendarDays")
+    const formattedName = iconName
+      .split(/[-_ ]+/)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join("");
+
+    const IconComponent = Icons[formattedName] || Icons[iconName] || Icons.Trophy;
     return <IconComponent className="w-6 h-6" />;
   };
 
@@ -71,14 +80,18 @@ export default function Activities() {
         
         if (fetchedData.length > 0) {
           const mainDoc = fetchedData[0];
+          const allActivities = fetchedData.flatMap(doc => Array.isArray(doc.activities) ? doc.activities : []);
+          const allEvents = fetchedData.flatMap(doc => Array.isArray(doc.events) ? doc.events : []);
+          const allStats = fetchedData.flatMap(doc => Array.isArray(doc.stats) ? doc.stats : []);
+
           setActivityData({
             title: mainDoc.title || defaultActivityData.title,
             description: mainDoc.description || defaultActivityData.description,
             image: mainDoc.image || defaultActivityData.image,
             spotlight: mainDoc.spotlight || defaultActivityData.spotlight,
-            activities: Array.isArray(mainDoc.activities) && mainDoc.activities.length > 0 ? mainDoc.activities : defaultActivityData.activities,
-            events: Array.isArray(mainDoc.events) && mainDoc.events.length > 0 ? mainDoc.events : defaultActivityData.events,
-            stats: Array.isArray(mainDoc.stats) && mainDoc.stats.length > 0 ? mainDoc.stats : defaultActivityData.stats,
+            activities: allActivities.length > 0 ? allActivities : defaultActivityData.activities,
+            events: allEvents.length > 0 ? allEvents : defaultActivityData.events,
+            stats: allStats.length > 0 ? allStats : defaultActivityData.stats,
           });
         } else if (!Array.isArray(data) && data.title) {
           setActivityData({
@@ -93,10 +106,21 @@ export default function Activities() {
         }
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchActivities();
   }, [backendURL]);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh]">
+        <div className="w-12 h-12 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
+        <p className="mt-4 text-gray-500 font-medium tracking-wide">Preparing Activities...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-neutral-50 font-sans overflow-hidden">
@@ -136,8 +160,8 @@ export default function Activities() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 z-10 group-hover:bg-black/40 transition-colors duration-500"></div>
             <div className="relative z-20 h-full flex flex-col justify-end">
               <Icons.Shield className="w-16 h-16 text-primary-300 mb-8" />
-              <h3 className="text-3xl md:text-4xl font-bold mb-4">{activityData.spotlight?.title || "Spotlight"}</h3>
-              <p className="text-lg text-neutral-200 max-w-xl leading-relaxed">
+              <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white drop-shadow-lg">{activityData.spotlight?.title || "Spotlight"}</h3>
+              <p className="text-lg text-white/90 max-w-xl leading-relaxed drop-shadow-md">
                 {activityData.spotlight?.description || ""}
               </p>
             </div>
@@ -180,12 +204,61 @@ export default function Activities() {
               ))}
             </div>
 
-            <button className="flex items-center gap-3 bg-primary-600 text-white px-8 py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary-700 transition-colors shadow-lg hover:shadow-primary-600/30">
-              <Icons.CalendarDays className="w-5 h-5" /> Download Full PDF
+            <button 
+              onClick={() => {
+                const printWindow = window.open("", "_blank");
+                const content = `
+                  <html>
+                    <head>
+                      <title>Activity Calendar - Edhaa School</title>
+                      <style>
+                        body { font-family: system-ui, -apple-system, sans-serif; padding: 50px; color: #1a1a1a; line-height: 1.6; }
+                        .header { text-align: center; margin-bottom: 50px; border-bottom: 4px solid #1e3a8a; padding-bottom: 20px; }
+                        h1 { color: #1e3a8a; font-size: 28px; margin-bottom: 10px; }
+                        .description { color: #666; font-size: 16px; max-width: 600px; margin: 0 auto; }
+                        .calendar-title { font-size: 22px; color: #1e3a8a; margin-top: 40px; margin-bottom: 20px; font-weight: bold; }
+                        .event-list { width: 100%; border-collapse: collapse; }
+                        .event-item { border-bottom: 1px solid #eee; padding: 15px 0; display: flex; align-items: center; }
+                        .event-date { font-weight: 800; color: #2563eb; width: 120px; font-size: 16px; }
+                        .event-title { font-size: 18px; color: #333; font-weight: 600; }
+                        .footer { margin-top: 50px; text-align: center; font-size: 12px; color: #999; border-top: 1px solid #eee; padding-top: 20px; }
+                      </style>
+                    </head>
+                    <body>
+                      <div class="header">
+                        <h1>EDHAA SCHOOL</h1>
+                        <p>Academic Year 2025-26</p>
+                      </div>
+                      <div class="calendar-title">Activity Calendar</div>
+                      <p class="description">${activityData.description}</p>
+                      <div style="margin-top: 40px;">
+                        ${activityData.events.map(e => `
+                          <div class="event-item">
+                            <div class="event-date">${e.date}</div>
+                            <div class="event-title">${e.title}</div>
+                          </div>
+                        `).join("")}
+                      </div>
+                      <div class="footer">
+                        © 2026 Edhaa School. All Rights Reserved. Generated dynamically from the school website.
+                      </div>
+                      <script>
+                        window.onload = function() { window.print(); window.onafterprint = function() { window.close(); }; }
+                      </script>
+                    </body>
+                  </html>
+                `;
+                printWindow.document.write(content);
+                printWindow.document.close();
+              }}
+              className="inline-flex items-center gap-3 bg-primary-600 text-white px-8 py-4 font-bold text-sm uppercase tracking-widest hover:bg-primary-700 hover:shadow-primary-600/30 transition-all duration-300 shadow-lg cursor-pointer"
+            >
+              <Icons.FileText className="w-5 h-5" /> 
+              Download Full PDF
             </button>
           </motion.div>
-          
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="order-1 lg:order-2 relative">
+            
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="order-1 lg:order-2 relative">
             <div className="absolute inset-0 bg-primary-600 rounded-3xl rotate-6 opacity-10"></div>
             <div className="bg-white p-10 md:p-14 shadow-2xl rounded-3xl relative z-10 border border-neutral-100">
               <h4 className="text-2xl font-bold text-primary-900 mb-8 border-b border-neutral-200 pb-4">Our Impact</h4>
