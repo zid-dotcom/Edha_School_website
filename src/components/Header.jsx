@@ -62,6 +62,7 @@ export default function Header() {
                   { name: "About Us", path: "/AboutUs" },
                   { name: "Academics", path: "/Academics" },
                   { name: "Activities", path: "/Activities" },
+                  { name: "Gallery", path: "/Gallery" },
                   { name: "Infrastructure", path: "/Facilities" },
                   { name: "News & Events", path: "/NewsAndEvenets" },
                   { name: "Contact", path: "/Contact" }
@@ -97,6 +98,7 @@ export default function Header() {
                   { name: "About Us", path: "/AboutUs" },
                   { name: "Academics", path: "/Academics" },
                   { name: "Activities", path: "/Activities" },
+                  { name: "Gallery", path: "/Gallery" },
                   { name: "Infrastructure", path: "/Facilities" },
                   { name: "News & Events", path: "/NewsAndEvenets" },
                   { name: "Contact", path: "/Contact" }

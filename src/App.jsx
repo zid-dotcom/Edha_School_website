@@ -70,6 +70,7 @@ import Contact from "./pages/Contact";
 import AboutUs from "./pages/AboutUS";
 import Adminlogin from "./pages/Adminlogin";
 import AdminDashboard from "./pages/AdminDashboard";
+import Gallery from "./pages/Gallery";
 import NotFound from "./pages/NotFound";
 
 import { ToastContainer } from "react-toastify";
@@ -99,6 +100,7 @@ const App = () => {
         <Route path="/AboutUs" element={<AboutUs />} />
         <Route path="/NewsAndEvenets" element={<NewsandEvents />} />
         <Route path="/Contact" element={<Contact />} />
+        <Route path="/Gallery" element={<Gallery />} />
 
         {/* ADMIN LOGIN */}
         <Route
